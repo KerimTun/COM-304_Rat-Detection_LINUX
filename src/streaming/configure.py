@@ -433,7 +433,7 @@ def main():
     
     #   HOW TO USE :
     #
-    #       python -m streaming.my_configure my_config.cfg
+    #       python -m streaming.configure my_config.cfg
     #
     
     # ------- MAIN PARSER

@@ -11,7 +11,6 @@ from . import configure
 import numpy as np
 
 
-# Project Root : project_2/ when this file is project_2/src/streaming/my_stream_2r.py
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -214,7 +213,7 @@ def build_cfg_radar(cfg_params, mid_gap_m=0.0, beam_width_deg=40.0, beam_center_
     Parameters
     ----------
     cfg_params : dict
-        Parameters computed from `my_configure.compute_params()`.
+        Parameters computed from `configure.compute_params()`.
 
     mid_gap_m : float, optional
         Distance between the two radars in meters.
@@ -233,8 +232,8 @@ def build_cfg_radar(cfg_params, mid_gap_m=0.0, beam_width_deg=40.0, beam_center_
     -------
     dict
         Runtime radar configuration dictionary used by:
-            - my_prod_dca.py
-            - my_realtime_streaming_2r_fused.py
+            - prod_dca.py
+            - realtime_streaming_2r_fused.py
             - beamform_2d_s()
             - Cartesian projection / fusion code
 
@@ -502,13 +501,13 @@ def main():
     cfg_file_path = f"../configs/{args.config}.cfg"  # NOTE : THIS IS THE PATH TO THE CONFIG FILE (equivalent to lua files)
 
     # Parse .cfg file
-    cfg = my_configure.parse_cfg(cfg_file_path)
+    cfg = configure.parse_cfg(cfg_file_path)
 
     # Compute radar parameters from .cfg
-    cfg_params = my_configure.compute_params(cfg)
+    cfg_params = configure.compute_params(cfg)
 
     # Print computed radar parameters
-    my_configure.print_params(cfg_params)
+    configure.print_params(cfg_params)
 
 
     # -------  Build runtime configs

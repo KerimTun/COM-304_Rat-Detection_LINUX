@@ -23,16 +23,6 @@ This repository contains the code for the COM-304 project for Linux-oriented rea
 ## Info 
 
 
-### Main processing components
-
-- `src/streaming/prod_dca.py`: live DCA1000 producer, range FFT, optional background subtraction, Doppler filtering, beamforming, and queue output.
-- `src/streaming/realtime_streaming_1r.py`: single-radar real-time visualization and recording loop.
-- `src/streaming/realtime_streaming_2r_fused.py`: dual-radar synchronization, Cartesian fusion, logging, recording, and Jerry detection.
-- `src/processing/processing.py`: CFAR, beamforming, DBSCAN, FFT-related utilities.
-- `src/utils/utils.py`: polar-to-Cartesian projection, normalization, antenna geometry utilities.
-- `src/mmwavecapture/`: radar and DCA1000 control helpers.
-
-
 ### Repository Structure
 
 ```text
@@ -51,6 +41,16 @@ COM-304_Rat-Detection_LINUX/
     ├── utils/                       # Coordinate transforms and radar utility functions
     └── visualization/               # Plotting helpers
 ```
+
+
+### Main processing components
+
+- `src/streaming/prod_dca.py`: live DCA1000 producer, range FFT, optional background subtraction, Doppler filtering, beamforming, and queue output.
+- `src/streaming/realtime_streaming_1r.py`: single-radar real-time visualization and recording loop.
+- `src/streaming/realtime_streaming_2r_fused.py`: dual-radar synchronization, Cartesian fusion, logging, recording, and Jerry detection.
+- `src/processing/processing.py`: CFAR, beamforming, DBSCAN, FFT-related utilities.
+- `src/utils/utils.py`: polar-to-Cartesian projection, normalization, antenna geometry utilities.
+- `src/mmwavecapture/`: radar and DCA1000 control helpers.
 
 
 
@@ -359,6 +359,13 @@ Useful options:
 --far_range_zero_bins 0         # Optionally ignore far range bins
 ```
 
+## Detection Logic
+
+The dual-radar pipeline contains a range-bin activity detector named `JerryClassifier`. It collapses a beamformed radar map into a 1D range profile, estimates a noise floor outside the selected range-bin region, and tracks activity over a moving window. A rat/Jerry detection is reported when either radar detects sustained activity in the selected range region.
+
+The fused Cartesian map is used for visualization and optional localization/debugging. The final detection decision is based on the per-radar range-bin detector.
+
+
 ## Output Data
 
 Live runs create experiment folders under:
@@ -436,12 +443,6 @@ This parses the TI mmWave config file and prints derived values such as:
 - Doppler resolution
 - max Doppler velocity
 
-
-## Detection Logic
-
-The dual-radar pipeline contains a range-bin activity detector named `JerryClassifier`. It collapses a beamformed radar map into a 1D range profile, estimates a noise floor outside the selected range-bin region, and tracks activity over a moving window. A rat/Jerry detection is reported when either radar detects sustained activity in the selected range region.
-
-The fused Cartesian map is used for visualization and optional localization/debugging. The final detection decision is based on the per-radar range-bin detector.
 
 
 ## Troubleshooting

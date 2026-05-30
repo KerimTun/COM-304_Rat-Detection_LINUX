@@ -544,7 +544,7 @@ def main():
 
     print()
     print("--------- STARTING STREAMING ----------")
-    D_realtime_streaming_2r_fused.main(cfg_radar, cfg_cfar)
+    realtime_streaming_2r_fused.main(cfg_radar, cfg_cfar)
     print("---------------------------------------")
     print()
 

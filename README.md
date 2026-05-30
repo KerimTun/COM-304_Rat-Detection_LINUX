@@ -106,8 +106,6 @@ This initializes the DCA1000EVM, configures the radar, starts recording, and sta
 In a second terminal:
 
 ```bash
-export REPO=/home/.../COM-304_Rat-Detection_LINUX
-export SRC="$REPO/src"
 
 cd .../304_Rat-Detection_LINUX/src
 conda activate radar

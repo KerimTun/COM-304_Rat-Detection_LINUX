@@ -12,7 +12,7 @@ def main():
     dca = dca1000.DCA1000()
 
     # Initialize the radar
-    cfg_file = "../configs/profile_super.cfg"   # NOTE : THIS IS THE PATH TO THE CONFIG FILE (equivalent to lua files)
+    cfg_file =  "../configs/D_doppler_config.cfg" # "../configs/profile_super.cfg"   # NOTE : THIS IS THE PATH TO THE CONFIG FILE (equivalent to lua files)
 
 
     radar = Radar(

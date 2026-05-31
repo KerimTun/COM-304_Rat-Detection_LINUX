@@ -12,7 +12,8 @@ def main():
     dca = dca1000_2.DCA1000()
 
     # Initialize the radar
-    cfg_file = "../configs/profile_super.cfg"
+    cfg_file =  "../configs/D_doppler_config.cfg"  # "../configs/profile_super.cfg"
+
     radar = Radar(
         config_port="/dev/ttyACM0",     # NOTE : I CHANGED THIS FOR LINUX COMPATIBILITY
 

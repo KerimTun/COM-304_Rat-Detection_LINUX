@@ -311,6 +311,14 @@ sudo ip link set <enx_RADAR_1_INTERFACE> up
 sudo ip link set <enx_RADAR_2_INTERFACE> up
 ```
 
+
+### 2.6 Temporarily Increase Linux UDP Reciever buffer size 
+
+```bash
+sudo sysctl -w net.core.rmem_max=268435456
+sudo sysctl -w net.core.rmem_default=268435456
+```
+
 ---
 
 ### 2.6 Start the dual-radar viewer

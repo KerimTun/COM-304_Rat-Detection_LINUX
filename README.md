@@ -320,7 +320,7 @@ sudo sysctl -w net.core.rmem_default=268435456
 
 ---
 
-### 2.6 Start the dual-radar viewer
+### 2.7 Start the dual-radar viewer
 
 Open another terminal:
 

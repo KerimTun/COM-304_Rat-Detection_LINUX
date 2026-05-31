@@ -433,7 +433,7 @@ def main():
     
     #   HOW TO USE :
     #
-    #       python -m streaming.configure my_config.cfg
+    #       python -m streaming.configure D_doppler_config.cfg
     #
     
     # ------- MAIN PARSER

@@ -309,7 +309,7 @@ class MyApp(ShowBase):
         self.closed = False
         self.video_writer = None
         self.frame_pair_idx = 0
-
+        self.video_frame_shape = None
 
         #   Load geometry / radar-axis information from the config
         #   ------------------------------------------------------
@@ -717,13 +717,48 @@ class MyApp(ShowBase):
             return
         if self.frame_pair_idx % self.record_video_every_n_pairs != 0:
             return
+        # try:
+        #     self.fig_cart.canvas.draw()
+        #     frame_rgba = np.asarray(self.fig_cart.canvas.buffer_rgba())
+        #     frame_rgb = np.ascontiguousarray(frame_rgba[:, :, :3].copy())
+        #     self.video_writer.append_data(frame_rgb)
+        # except Exception as exc:
+        #     print("-- MP4 frame write error:", exc)
+
         try:
             self.fig_cart.canvas.draw()
             frame_rgba = np.asarray(self.fig_cart.canvas.buffer_rgba())
             frame_rgb = np.ascontiguousarray(frame_rgba[:, :, :3].copy())
+
+            h, w = frame_rgb.shape[:2]
+
+            if self.video_frame_shape is None:
+                self.video_frame_shape = (h, w)
+            else:
+                target_h, target_w = self.video_frame_shape
+
+                # Crop if the new frame is too large
+                frame_rgb = frame_rgb[:target_h, :target_w, :]
+
+                # Pad if the new frame is too small
+                h, w = frame_rgb.shape[:2]
+                if h < target_h or w < target_w:
+                    pad_h = target_h - h
+                    pad_w = target_w - w
+                    frame_rgb = np.pad(
+                        frame_rgb,
+                        ((0, pad_h), (0, pad_w), (0, 0)),
+                        mode="edge",
+                    )
+
+                frame_rgb = np.ascontiguousarray(frame_rgb)
+
             self.video_writer.append_data(frame_rgb)
+
         except Exception as exc:
             print("-- MP4 frame write error:", exc)
+
+
 
     def update_logs(self, summary):
         """Append per-frame signal and detection information to JSONL logs.

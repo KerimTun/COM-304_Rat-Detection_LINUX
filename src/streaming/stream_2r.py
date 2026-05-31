@@ -477,7 +477,7 @@ def main():
     #   PARSER --------------------------------------------------------------------------------------------------------
     parser = argparse.ArgumentParser(description="Example script with command line arguments.")
 
-    parser.add_argument("--config", default="my_config", help="Name of the .cfg file inside the configs directory.")
+    parser.add_argument("--config", default="D_doppler_config", help="Name of the .cfg file inside the configs directory.")
 
     # Add arguments
     parser.add_argument("--cfar"                        , action="store_true"               , help="True if you want cfar.")

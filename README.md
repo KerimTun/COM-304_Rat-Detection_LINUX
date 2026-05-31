@@ -1,8 +1,7 @@
 # COM-304 Radars Rat-Detection Project (Linux)
 
 
-![alt text](<Screenshot from 2026-05-29 12-16-46.png>)
-
+![alt text](<Screenshot from 2026-05-29 12-16-46.png>) ![alt text](dual_setup_detection.jpg)
 
 This repository contains the code for the COM-304 project for Linux-oriented real-time rat detection pipeline using Texas Instruments mmWave radar hardware and DCA1000EVM capture boards. The codebase reads live ADC data, performs range/Doppler processing and azimuth beamforming, projects radar power maps into Cartesian coordinates, fuses one or two radar streams, visualizes detections, and saves experiment data for later analysis or machine-learning workflows.
 
@@ -30,7 +29,7 @@ COM-304_Rat-Detection_LINUX/
 ├── environment.yml                  # Full exported Conda environment
 ├── README.md
 ├── configs/                         # TI mmWave .cfg radar profiles
-│   ├── D_doppler_config.cfg
+│   ├── D_doppler_config.cfg         # Config File Used to Start-up Radars
 │   └── my_config.cfg
 └── src/
     ├── configuration/               # Radar configuration helpers
@@ -115,13 +114,13 @@ python -m streaming.stream_1r
 Useful options:
 
 ```bash
---config my_config       # Radar .cfg file name without .cfg
---cfar                   # Enable CFAR processing
---doppler                # Enable Doppler mode
---save_raw_dt            # Save raw ADC data
---exp_name test          # Base experiment name
---beam-width 180         # Beamforming angular width in degrees
---beam-center 90         # 90 degrees means straight ahead
+--config D_doppler_config   # Radar .cfg file name without .cfg
+--cfar                      # Enable CFAR processing
+--doppler                   # Enable Doppler mode
+--save_raw_dt               # Save raw ADC data
+--exp_name test             # Base experiment name
+--beam-width 180            # Beamforming angular width in degrees
+--beam-center 90            # 90 degrees means straight ahead
 ```
 
 
@@ -340,7 +339,7 @@ From the `src` directory:
 
 ```bash
 python -m streaming.stream_2r \
-  --config my_config \
+  --config D_doppler_config \
   --exp_name test \
   --mid_gap 0.2 \
   --beam-width 90 \
@@ -351,7 +350,7 @@ python -m streaming.stream_2r \
 Useful options:
 
 ```bash
---config my_config              # Radar .cfg file name without .cfg
+--config D_doppler_config       # Radar .cfg file name without .cfg
 --cfar                          # Enable CFAR
 --doppler                       # Enable Doppler mode
 --save_raw_dt                   # Save raw radar data
@@ -424,21 +423,22 @@ Radar profiles are stored in `configs/`. The main scripts accept a config name w
 For example:
 
 ```bash
---config my_config
+--config D_doppler_config
 ```
 
 uses:
 
 ```text
-configs/my_config.cfg
+configs/D_doppler_config.cfg
 ```
 
 To inspect calculated radar parameters from a `.cfg` file, run from the `src` directory:
 
 ```bash
 cd src
-python -m streaming.configure my_config
+python -m streaming.configure D_doppler_config
 ```
+
 
 This parses the TI mmWave config file and prints derived values such as:
 
@@ -450,6 +450,11 @@ This parses the TI mmWave config file and prints derived values such as:
 - max range
 - Doppler resolution
 - max Doppler velocity
+
+
+### Remark
+
+The current config. file used to start-up radars is `D_doppler_config.cfg`. If one desires to use another configuration, please make sure to update the corresponding lines in `start_radar_1.py` and `start_radar_2.py`!
 
 
 
